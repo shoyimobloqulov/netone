@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanban Board - Buyurtmalar</title>
+    <title>Buyurtmalar Jarayondagi</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -215,8 +215,8 @@
                         </div>
 
                         <div class="col-md-6">
-                            <button class="btn btn-primary mb-3 float-right" onclick="openColumnModal()">+ Bo'lim
-                                Qo'shish</button>
+                            <button class="btn btn-primary mb-3 float-right" onclick="openColumnModal()">
+                                <i class="fa fa-plus"></i> Bo'lim qo'shish</button>
                         </div>
                     </div>
                 </div>
@@ -387,9 +387,9 @@
                 let columnHtml = `
             <div class="kanban-column" id="${column.id}" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <h4>${column.name} 
-                    <button class="btn btn-sm btn-danger" onclick="deleteColumn('${column.id}')">X</button>
+                    <button class="btn btn-sm btn-outline-danger float-right" onclick="deleteColumn('${column.id}')"><i class="fa fa-trash"></i></button>
                 </h4>
-                <button class="btn btn-success btn-block" onclick="openOrderModal('${column.id}')">+ Buyurtma</button>
+                <button class="btn btn-outline-success btn-sm btn-block" onclick="openOrderModal('${column.id}')"><i class="fa fa-plus"></i> Buyurtma</button>
                 <div class="order-list">
                     ${column.orders.map(order => `
                         <div class="kanban-card" draggable="true" ondragstart="drag(event)" id="${order.id}">
@@ -399,8 +399,8 @@
                             <p><strong>Mahsulot turi:</strong> ${order.type}</p>
                             <p><strong>Avans:</strong> ${order.advance} so'm</p>
                             <p><strong>Jami summa:</strong> ${order.total} so'm</p>
-                            <button class="btn btn-sm btn-warning" onclick="editOrder('${column.id}', '${order.id}')">Tahrirlash</button>                            
-                            <button class="btn btn-sm btn-danger" onclick="deleteOrder('${column.id}', '${order.id}')">O'chirish</button>
+                            <button class="btn btn-sm btn-outline-info" onclick="editOrder('${column.id}', '${order.id}')"><i class="fa fa-edit"></i> Taxrirlash</button>                            
+                            <button class="btn btn-sm btn-outline-danger float-right" onclick="deleteOrder('${column.id}', '${order.id}')"><i class="fa fa-trash"></i> O'chirish</button>
                         </div>
                     `).join("")}
                 </div>
