@@ -282,6 +282,52 @@
         </div>
     </div>
 
+    <div class="modal fade" id="editOrderModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Buyurtmani Tahrirlash</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editOrderId">
+                    <input type="hidden" id="editColumnId">
+                    <div class="form-group">
+                        <label>Buyurtma Nomi:</label>
+                        <input type="text" id="editOrderName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Mijoz:</label>
+                        <input type="text" id="editOrderClient" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Muddat:</label>
+                        <input type="date" id="editOrderDeadline" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Mahsulot Turi:</label>
+                        <select id="editOrderType" class="form-control">
+                            <option>Telefon</option>
+                            <option>Kompyuter</option>
+                            <option>Televizor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Avans:</label>
+                        <input type="number" id="editOrderAdvance" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Mahsulot Summasi:</label>
+                        <input type="number" id="editOrderTotal" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="updateOrder()">Saqlash</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="columnModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -353,7 +399,7 @@
                             <p><strong>Mahsulot turi:</strong> ${order.type}</p>
                             <p><strong>Avans:</strong> ${order.advance} so'm</p>
                             <p><strong>Jami summa:</strong> ${order.total} so'm</p>
-                            <button class="btn btn-sm btn-primary" onclick="editOrder('${column.id}', '${order.id}')">Tahrirlash</button>
+                            <button class="btn btn-sm btn-warning" onclick="editOrder('${column.id}', '${order.id}')">Tahrirlash</button>                            
                             <button class="btn btn-sm btn-danger" onclick="deleteOrder('${column.id}', '${order.id}')">O'chirish</button>
                         </div>
                     `).join("")}
@@ -370,7 +416,7 @@
             $("#orderName").val("");
             $("#orderClient").val("");
             $("#orderDeadline").val("");
-            $("#orderType").val(""); 
+            $("#orderType").val("");
             $("#orderAdvance").val("");
             $("#orderTotal").val("");
             $("#orderModal").modal("show");
@@ -378,7 +424,7 @@
 
         function saveOrder() {
             let columnId = $("#currentColumnId").val();
-            let orderId = $("#orderId").val(); 
+            let orderId = $("#orderId").val();
             let newOrder = {
                 id: orderId ? orderId : "order-" + new Date().getTime(),
                 name: $("#orderName").val(),
@@ -411,19 +457,45 @@
             if (column) {
                 let order = column.orders.find(o => o.id === orderId);
                 if (order) {
-                    $("#currentColumnId").val(columnId);
-                    $("#orderId").val(order.id); // Buyurtma ID sini saqlab qolamiz
-                    $("#orderName").val(order.name);
-                    $("#orderClient").val(order.client);
-                    $("#orderDeadline").val(order.deadline);
-                    $("#orderType").val(order.type);
-                    $("#orderAdvance").val(order.advance);
-                    $("#orderTotal").val(order.total);
-                    $("#orderModal").modal("show");
+                    $("#editColumnId").val(columnId);
+                    $("#editOrderId").val(order.id);
+                    $("#editOrderName").val(order.name);
+                    $("#editOrderClient").val(order.client);
+                    $("#editOrderDeadline").val(order.deadline);
+                    $("#editOrderType").val(order.type);
+                    $("#editOrderAdvance").val(order.advance);
+                    $("#editOrderTotal").val(order.total);
+                    $("#editOrderModal").modal("show");
                 }
             }
         }
 
+
+        function updateOrder() {
+            let columnId = $("#editColumnId").val();
+            let orderId = $("#editOrderId").val();
+
+            let updatedOrder = {
+                id: orderId,
+                name: $("#editOrderName").val(),
+                client: $("#editOrderClient").val(),
+                deadline: $("#editOrderDeadline").val(),
+                type: $("#editOrderType").val(),
+                advance: $("#editOrderAdvance").val(),
+                total: $("#editOrderTotal").val()
+            };
+
+            let column = kanbanData.columns.find(col => col.id === columnId);
+            if (column) {
+                let orderIndex = column.orders.findIndex(o => o.id === orderId);
+                if (orderIndex !== -1) {
+                    column.orders[orderIndex] = updatedOrder;
+                    saveData();
+                    loadData();
+                    $("#editOrderModal").modal("hide");
+                }
+            }
+        }
 
         function deleteOrder(columnId, orderId) {
             let column = kanbanData.columns.find(col => col.id === columnId);
