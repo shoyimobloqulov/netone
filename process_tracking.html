@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board - Buyurtmalar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .kanban-board {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 20px;
+        }
+
+        .kanban-column {
+            flex: 1;
+            min-width: 250px;
+            background: #f4f6f9;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .kanban-column h4 {
+            text-align: center;
+        }
+
+        .kanban-card {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: grab;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+
+                <!-- Messages Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-comments"></i>
+                        <span class="badge badge-danger navbar-badge">3</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+
+                    </div>
+                </li>
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">15</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <img src="dist/img/user8-128x128.jpg" alt="User Image"
+                            class="brand-image img-circle elevation-3" style="width: 30px; height: 30px;">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <div class="dropdown-header text-center">
+                            <img src="dist/img/user8-128x128.jpg" alt="User Image" class="img-circle"
+                                style="width: 60px; height: 60px;">
+                            <p>John Doe<br><small>Administrator</small></p>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> Profile
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="login.html" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Chiqish
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="index.html" class="brand-link">
+                <img src="dist/img/AdminLTELogo.png" alt="Admin Logo" class="brand-image img-circle elevation-3"
+                    style="opacity: .8">
+                <span class="brand-text font-weight-light">Admin</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Admin</a>
+                    </div>
+                </div>
+
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                            aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Dashboard -->
+                        <li class="nav-item"><a href="index.html" class="nav-link"><i class="nav-icon fas fa-users"></i>
+                                <p>Asosiy</p>
+                            </a></li>
+                        <li class="nav-item"><a href="users.html" class="nav-link"><i class="nav-icon fas fa-users"></i>
+                                <p>Foydalanuvchilar</p>
+                            </a></li>
+                        <li class="nav-item"><a href="customers.html" class="nav-link active"><i
+                                    class="nav-icon fas fa-user"></i>
+                                <p>Mijozlar</p>
+                            </a></li>
+                        <li class="nav-item"><a href="suppliers.html" class="nav-link"><i
+                                    class="nav-icon fas fa-truck"></i>
+                                <p>Taminotchilar</p>
+                            </a></li>
+                        <li class="nav-item"><a href="products.html" class="nav-link"><i
+                                    class="nav-icon fas fa-box"></i>
+                                <p>Mahsulotlar</p>
+                            </a></li>
+                        <li class="nav-item"><a href="statuses.html" class="nav-link"><i
+                                    class="nav-icon fas fa-clipboard-list"></i>
+                                <p>Statuslar</p>
+                            </a></li>
+                        <li class="nav-item"><a href="accounts.html" class="nav-link"><i
+                                    class="nav-icon fas fa-money-bill"></i>
+                                <p>Hisoblar</p>
+                            </a></li>
+                        <li class="nav-item"><a href="profit_loss.html" class="nav-link"><i
+                                    class="nav-icon fas fa-chart-line"></i>
+                                <p>Foyda va Zarar</p>
+                            </a></li>
+                        <li class="nav-item"><a href="customer_audit.html" class="nav-link"><i
+                                    class="nav-icon fas fa-file-alt"></i>
+                                <p>Mijoz tekshiruv akti</p>
+                            </a></li>
+                        <li class="nav-item"><a href="supplier_audit.html" class="nav-link"><i
+                                    class="nav-icon fas fa-file-contract"></i>
+                                <p>Taminotchi tekshiruv akti</p>
+                            </a></li>
+                        <li class="nav-item"><a href="orders.html" class="nav-link"><i
+                                    class="nav-icon fas fa-shopping-cart"></i>
+                                <p>Buyurtmalar</p>
+                            </a></li>
+                        <li class="nav-item"><a href="process_tracking.html" class="nav-link"><i
+                                    class="nav-icon fas fa-eye"></i>
+                                <p>Jarayon kuzatuvi</p>
+                            </a></li>
+                        <li class="nav-item"><a href="attendance.html" class="nav-link"><i
+                                    class="nav-icon fas fa-calendar-check"></i>
+                                <p>Davomat jadvali</p>
+                            </a></li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Buyurtmalar harakati</h1>
+                        </div>
+
+                        <div class="col-md-6">
+                            <button class="btn btn-primary mb-3 float-right" onclick="openColumnModal()">+ Bo'lim
+                                Qo'shish</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header">Buyurtmalar</div>
+                        <div class="card-body">
+                            <div id="kanbanBoard" class="kanban-board"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buyurtma qo'shish Modal -->
+    <div class="modal fade" id="orderModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yangi Buyurtma</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="currentColumnId">
+                    <div class="form-group">
+                        <label>Buyurtma Nomi:</label>
+                        <input type="text" id="orderName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Mijoz:</label>
+                        <input type="text" id="orderClient" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Muddat:</label>
+                        <input type="date" id="orderDeadline" class="form-control">
+                    </div>
+                    <label for="orderType">Mahsulot Turi:</label>
+                    <select id="orderType" class="form-control">
+                        <option value="Banner">Banner</option>
+                        <option value="Tablo">Tablo</option>
+                        <option value="Stend">Stend</option>
+                        <option value="LED Ekran">LED Ekran</option>
+                        <option value="Reklama taxtasi">Reklama taxtasi</option>
+                        <option value="Boshqa">Boshqa</option>
+                    </select>
+
+                    <div class="form-group">
+                        <label>Avans:</label>
+                        <input type="number" id="orderAdvance" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Mahsulot Summasi:</label>
+                        <input type="number" id="orderTotal" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="saveOrder()">Saqlash</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="columnModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yangi Bo'lim</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Bo'lim Nomi:</label>
+                        <input type="text" id="columnName" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="saveColumn()">Saqlash</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let kanbanData = JSON.parse(sessionStorage.getItem("kanbanData")) || {
+            columns: [{
+                    id: "razmer",
+                    name: "Razmer",
+                    orders: []
+                },
+                {
+                    id: "dizayner",
+                    name: "Dizayner",
+                    orders: []
+                },
+                {
+                    id: "kesish",
+                    name: "Kesish",
+                    orders: []
+                },
+                {
+                    id: "yasash",
+                    name: "Yasash",
+                    orders: []
+                },
+                {
+                    id: "montaj",
+                    name: "Montaj",
+                    orders: []
+                }
+            ]
+        };
+
+        function saveData() {
+            sessionStorage.setItem("kanbanData", JSON.stringify(kanbanData));
+        }
+
+        function loadData() {
+            $("#kanbanBoard").html("");
+            kanbanData.columns.forEach(column => {
+                let columnHtml = `
+            <div class="kanban-column" id="${column.id}" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h4>${column.name} 
+                    <button class="btn btn-sm btn-danger" onclick="deleteColumn('${column.id}')">X</button>
+                </h4>
+                <button class="btn btn-success btn-block" onclick="openOrderModal('${column.id}')">+ Buyurtma</button>
+                <div class="order-list">
+                    ${column.orders.map(order => `
+                        <div class="kanban-card" draggable="true" ondragstart="drag(event)" id="${order.id}">
+                            <strong>${order.name}</strong>
+                            <p><strong>Mijoz:</strong> ${order.client}</p>
+                            <p><strong>Muddat:</strong> ${order.deadline}</p>
+                            <p><strong>Mahsulot turi:</strong> ${order.type}</p>
+                            <p><strong>Avans:</strong> ${order.advance} so'm</p>
+                            <p><strong>Jami summa:</strong> ${order.total} so'm</p>
+                            <button class="btn btn-sm btn-primary" onclick="editOrder('${column.id}', '${order.id}')">Tahrirlash</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteOrder('${column.id}', '${order.id}')">O'chirish</button>
+                        </div>
+                    `).join("")}
+                </div>
+            </div>
+        `;
+                $("#kanbanBoard").append(columnHtml);
+            });
+        }
+
+        function openOrderModal(columnId) {
+            $("#currentColumnId").val(columnId);
+            $("#orderId").val("");
+            $("#orderName").val("");
+            $("#orderClient").val("");
+            $("#orderDeadline").val("");
+            $("#orderType").val(""); 
+            $("#orderAdvance").val("");
+            $("#orderTotal").val("");
+            $("#orderModal").modal("show");
+        }
+
+        function saveOrder() {
+            let columnId = $("#currentColumnId").val();
+            let orderId = $("#orderId").val(); 
+            let newOrder = {
+                id: orderId ? orderId : "order-" + new Date().getTime(),
+                name: $("#orderName").val(),
+                client: $("#orderClient").val(),
+                deadline: $("#orderDeadline").val(),
+                type: $("#orderType").val(),
+                advance: $("#orderAdvance").val(),
+                total: $("#orderTotal").val()
+            };
+
+            let column = kanbanData.columns.find(col => col.id === columnId);
+            if (column) {
+                if (orderId) {
+                    let orderIndex = column.orders.findIndex(o => o.id === orderId);
+                    if (orderIndex !== -1) {
+                        column.orders[orderIndex] = newOrder;
+                    }
+                } else {
+                    column.orders.push(newOrder);
+                }
+
+                saveData();
+                loadData();
+                $("#orderModal").modal("hide");
+            }
+        }
+
+        function editOrder(columnId, orderId) {
+            let column = kanbanData.columns.find(col => col.id === columnId);
+            if (column) {
+                let order = column.orders.find(o => o.id === orderId);
+                if (order) {
+                    $("#currentColumnId").val(columnId);
+                    $("#orderId").val(order.id); // Buyurtma ID sini saqlab qolamiz
+                    $("#orderName").val(order.name);
+                    $("#orderClient").val(order.client);
+                    $("#orderDeadline").val(order.deadline);
+                    $("#orderType").val(order.type);
+                    $("#orderAdvance").val(order.advance);
+                    $("#orderTotal").val(order.total);
+                    $("#orderModal").modal("show");
+                }
+            }
+        }
+
+
+        function deleteOrder(columnId, orderId) {
+            let column = kanbanData.columns.find(col => col.id === columnId);
+            if (column) {
+                column.orders = column.orders.filter(order => order.id !== orderId);
+                saveData();
+                loadData();
+            }
+        }
+
+        function openColumnModal() {
+            $("#columnModal").modal("show");
+        }
+
+        // Bo'lim qo'shish
+        function saveColumn() {
+            let columnName = $("#columnName").val().trim();
+            if (columnName) {
+                kanbanData.columns.push({
+                    id: columnName.toLowerCase(),
+                    name: columnName,
+                    orders: []
+                });
+                saveData();
+                loadData();
+                $("#columnModal").modal("hide");
+            }
+        }
+
+        function deleteColumn(columnId) {
+            kanbanData.columns = kanbanData.columns.filter(col => col.id !== columnId);
+            saveData();
+            loadData();
+        }
+
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            let orderId = event.dataTransfer.getData("text");
+            let targetColumn = event.target.closest(".kanban-column").id;
+
+            let order = null;
+            kanbanData.columns.forEach(col => {
+                let index = col.orders.findIndex(o => o.id === orderId);
+                if (index !== -1) order = col.orders.splice(index, 1)[0];
+            });
+
+            if (order) {
+                kanbanData.columns.find(col => col.id === targetColumn).orders.push(order);
+                saveData();
+                loadData();
+            }
+        }
+
+        // Sahifani yuklaganda ma'lumotlarni chiqarish
+        $(document).ready(loadData);
+    </script>
+</body>
+
+</html>
